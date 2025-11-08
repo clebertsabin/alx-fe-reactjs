@@ -10,7 +10,7 @@ function App() {
       <Header />
       <Counter />
       <UserProfile 
-        name="Jane Doe" 
+        name="Clebert Sabin Ganza" 
         age={28} 
         bio="A passionate traveler who loves exploring new cities." 
       />
