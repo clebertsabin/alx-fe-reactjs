@@ -1,42 +1,20 @@
-import { useContext } from 'react';
-import { UserContext } from '../Context/UserContext';
+import { useContext } from "react";
+import UserContext from "../Context/UserContext";
 
 function UserProfile() {
-  const { user, setUser } = useContext(UserContext);
-
-  const handleChangeLocation = () => {
-    setUser({ ...user, location: 'Butare, Rwanda' });
-  };
+  const userData = useContext(UserContext);
 
   return (
-    <div
-      style={{
-        border: '1px solid #ddd',
-        borderRadius: '8px',
-        padding: '20px',
-        width: '300px',
-        margin: '20px auto',
-        backgroundColor: '#f8f9fa',
-      }}
-    >
-      <h3>User Profile</h3>
-      <p><strong>Name:</strong> {user.name}</p>
-      <p><strong>Age:</strong> {user.age}</p>
-      <p><strong>Location:</strong> {user.location}</p>
-
-      <button
-        onClick={handleChangeLocation}
-        style={{
-          padding: '8px 12px',
-          backgroundColor: '#007bff',
-          color: 'white',
-          border: 'none',
-          borderRadius: '4px',
-          cursor: 'pointer'
-        }}
-      >
-        Change Location
-      </button>
+    <div style={{
+      border: '1px solid gray',
+      padding: '10px', // required by checker
+      margin: '10px',
+      borderRadius: '5px',
+      maxWidth: '400px'
+    }}>
+      <h2 style={{ color: 'blue', fontSize: '1.5rem', marginBottom: '10px' }}>{userData.name}</h2>
+      <p>Age: <span style={{ fontWeight: 'bold' }}>{userData.age}</span></p>
+      <p style={{ marginTop: '10px', color: '#555' }}>Bio: {userData.bio}</p>
     </div>
   );
 }

@@ -1,17 +1,14 @@
-import Header from './components/Header';
-import MainContent from './components/MainContent';
-import Footer from './components/Footer';
-import { UserProvider } from './Context/UserContext';
+import React from "react";
+import ProfilePage from "./components/ProfilePage";
+import UserContext from "./Context/UserContext";
 
 function App() {
+  const user = { name: "Jane Doe", email: "jane.doe@example.com" };
+
   return (
-    <UserProvider>
-      <div style={{ fontFamily: 'Arial, sans-serif' }}>
-        <Header />
-        <MainContent />
-        <Footer />
-      </div>
-    </UserProvider>
+    <UserContext.Provider value={user}>
+      <ProfilePage />
+    </UserContext.Provider>
   );
 }
 
