@@ -1,31 +1,38 @@
-import React, { useEffect } from 'react';
-import { useRecipeStore } from '../recipeStore';
-import RecipeList from './RecipeList';
-import AddRecipeForm from './AddRecipeForm';
-import SearchBar from './SearchBar';
-import FavoritesList from './FavoritesList';
-import RecommendationsList from './RecommendationsList';
+import React, { useEffect } from 'react'
+import SearchBar from './SearchBar'
+import FavoritesList from './FavoritesList'
+import RecommendationsList from './RecommendationsList'
+import { useRecipeStore } from './recipeStore'
+
 
 const Home = () => {
-  const recipes = useRecipeStore((state) => state.recipes);
-  const searchTerm = useRecipeStore((state) => state.searchTerm);
-  const filterRecipes = useRecipeStore((state) => state.filterRecipes);
+const recipes = useRecipeStore(state => state.recipes)
+const filterRecipes = useRecipeStore(state => state.filterRecipes)
+const generateRecommendations = useRecipeStore(state => state.generateRecommendations)
 
-  // Filter recipes whenever recipes or searchTerm change
-  useEffect(() => {
-    filterRecipes();
-  }, [recipes, searchTerm]);
 
-  return (
-    <div style={{ maxWidth: '800px', margin: '0 auto', padding: '20px' }}>
-      <h1 style={{ textAlign: 'center' }}>Recipe Sharing App</h1>
-      <SearchBar />
-      <AddRecipeForm />
-      <RecipeList />
-      <FavoritesList />
-      <RecommendationsList />
-    </div>
-  );
-};
+// keep filteredRecipes in sync
+useEffect(() => {
+filterRecipes()
+}, [recipes])
 
-export default Home;
+
+useEffect(() => {
+generateRecommendations()
+}, [recipes])
+
+
+return (
+<div style={{ display: 'grid', gap: 16 }}>
+<SearchBar />
+<div style={{ display: 'grid', gap: 12 }}>
+<FavoritesList />
+<RecommendationsList />
+</div>
+</div>
+)
+}
+
+
+export default Home
+

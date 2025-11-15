@@ -1,26 +1,38 @@
-import { useRecipeStore } from "../recipeStore";
+import React from 'react'
+import { useRecipeStore } from './recipeStore'
+
 
 const FavoritesList = () => {
-  const recipes = useRecipeStore(state => state.recipes);
-  const favorites = useRecipeStore(state => state.favorites);
+const recipes = useRecipeStore(state => state.recipes)
+const favorites = useRecipeStore(state => state.favorites)
+const addFavorite = useRecipeStore(state => state.addFavorite)
+const removeFavorite = useRecipeStore(state => state.removeFavorite)
 
-  // THIS IS SAFE (computed outside the selector)
-  const favoriteRecipes = recipes.filter(r => favorites.includes(r.id));
 
-  return (
-    <div>
-      <h2>My Favorites</h2>
+// safe derived data outside selector
+const favoriteRecipes = recipes.filter(r => favorites.includes(r.id))
 
-      {favoriteRecipes.length === 0 && <p>No favorites yet.</p>}
 
-      {favoriteRecipes.map(r => (
-        <div key={r.id}>
-          <h3>{r.title}</h3>
-          <p>{r.description}</p>
-        </div>
-      ))}
-    </div>
-  );
-};
+if (favoriteRecipes.length === 0) return <div style={{ background: '#fff', padding: 12, borderRadius: 8 }}>No favorites yet.</div>
 
-export default FavoritesList;
+
+return (
+<div style={{ background: '#fff', padding: 12, borderRadius: 8 }}>
+<h3>My Favorites</h3>
+{favoriteRecipes.map(r => (
+<div key={r.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 0' }}>
+<div>
+<strong>{r.title}</strong>
+<div style={{ fontSize: 13 }}>{r.description}</div>
+</div>
+<div>
+<button onClick={() => removeFavorite(r.id)}>Remove</button>
+</div>
+</div>
+))}
+</div>
+)
+}
+
+
+export default FavoritesList
