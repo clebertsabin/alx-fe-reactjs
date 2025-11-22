@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { fetchAdvancedUsers } from "../services/githubService";
+import { fetchAdvancedUsers, fetchUserData} from "../services/githubService";
 
 function Search() {
     const [username, setUsername] = useState("");
@@ -10,35 +10,72 @@ function Search() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
 
+    // const handleAdvancedSearch = async (e) => {
+    //     e.preventDefault();
+    //     setLoading(true);
+    //     setError("");
+    //     setResults([]);
+    //     setPage(1);
+
+    //     try {
+    //         const data = await fetchAdvancedUsers(username, location, minRepos, 1);
+    //         setResults(data.items);
+    //     } catch (err) {
+    //         setError("Search failed.");
+    //     } finally {
+    //         setLoading(false);
+    //     }
+    // };
+
+    // const loadMore = async () => {
+    //     setLoading(true);
+    //     const nextPage = page + 1;
+
+    //     try {
+    //         const data = await fetchAdvancedUsers(username, location, minRepos, nextPage);
+    //         setResults([...results, ...data.items]);
+    //         setPage(nextPage);
+    //     } finally {
+    //         setLoading(false);
+    //     }
+    // };
+
     const handleAdvancedSearch = async (e) => {
-        e.preventDefault();
-        setLoading(true);
-        setError("");
-        setResults([]);
-        setPage(1);
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+    setResults([]);
+    setPage(1);
 
-        try {
-            const data = await fetchAdvancedUsers(username, location, minRepos, 1);
+    try {
+        // 1️⃣ Try direct username search first
+        if (username.trim() !== "") {
+            try {
+                const user = await fetchUserData(username);
+                setResults([user]);
+                return; // Stop here — do not run advanced search
+            } catch (err) {
+                // Username may not exist — continue to advanced search
+            }
+        }
+
+        // 2️⃣ Fall back to advanced search
+        const data = await fetchAdvancedUsers(username, location, minRepos, 1);
+
+        if (!data.items || data.items.length === 0) {
+            setError("Looks like we can't find the user");
+        } else {
             setResults(data.items);
-        } catch (err) {
-            setError("Search failed.");
-        } finally {
-            setLoading(false);
         }
-    };
 
-    const loadMore = async () => {
-        setLoading(true);
-        const nextPage = page + 1;
+    } catch (err) {
+        setError("Looks like we can't find the user");
+    } finally {
+        setLoading(false);
+    }
+};
 
-        try {
-            const data = await fetchAdvancedUsers(username, location, minRepos, nextPage);
-            setResults([...results, ...data.items]);
-            setPage(nextPage);
-        } finally {
-            setLoading(false);
-        }
-    };
+
 
     return (
         <div className="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md">
