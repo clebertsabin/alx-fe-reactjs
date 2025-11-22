@@ -34,7 +34,7 @@ export const fetchAdvancedUsers = async ({
         }
 
         const response = await axios.get(
-            `${SEARCH_URL}?q=${encodeURIComponent(query)}&page=${page}&per_page=${perPage}`,
+            `https://api.github.com/search/users?q=${encodeURIComponent(query)}&page=${page}&per_page=${perPage}`,
             { headers }
         );
 
@@ -52,7 +52,7 @@ export const fetchAdvancedUsers = async ({
  export async function fetchUserData(username) {
   try {
     const response = await axios.get(`https://api.github.com/users/${username}`);
-    return response.data;  // GitHub user data
+    return response.data;  
   } catch (error) {
     console.error("Error fetching GitHub user data:", error);
     throw error;
