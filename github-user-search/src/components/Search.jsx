@@ -63,13 +63,13 @@ function Search() {
         const data = await fetchAdvancedUsers(username, location, minRepos, 1);
 
         if (!data.items || data.items.length === 0) {
-            setError("Looks like we can't find the user");
+            setError("Looks like we cant find the user");
         } else {
             setResults(data.items);
         }
 
     } catch (err) {
-        setError("Looks like we can't find the user");
+        setError("Looks like we cant find the user");
     } finally {
         setLoading(false);
     }
