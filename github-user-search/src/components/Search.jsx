@@ -10,36 +10,6 @@ function Search() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
 
-    // const handleAdvancedSearch = async (e) => {
-    //     e.preventDefault();
-    //     setLoading(true);
-    //     setError("");
-    //     setResults([]);
-    //     setPage(1);
-
-    //     try {
-    //         const data = await fetchAdvancedUsers(username, location, minRepos, 1);
-    //         setResults(data.items);
-    //     } catch (err) {
-    //         setError("Search failed.");
-    //     } finally {
-    //         setLoading(false);
-    //     }
-    // };
-
-    // const loadMore = async () => {
-    //     setLoading(true);
-    //     const nextPage = page + 1;
-
-    //     try {
-    //         const data = await fetchAdvancedUsers(username, location, minRepos, nextPage);
-    //         setResults([...results, ...data.items]);
-    //         setPage(nextPage);
-    //     } finally {
-    //         setLoading(false);
-    //     }
-    // };
-
     const handleAdvancedSearch = async (e) => {
     e.preventDefault();
     setLoading(true);
