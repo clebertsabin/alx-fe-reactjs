@@ -48,27 +48,27 @@ function Search() {
     setPage(1);
 
     try {
-        // 1️⃣ Try direct username search first
         if (username.trim() !== "") {
             try {
                 const user = await fetchUserData(username);
                 setResults([user]);
-                return; // Stop here — do not run advanced search
+                return; 
             } catch (err) {
-                // Username may not exist — continue to advanced search
+                setResults(["Looks like we cant find the user"])
             }
         }
 
-        // 2️⃣ Fall back to advanced search
         const data = await fetchAdvancedUsers(username, location, minRepos, 1);
 
         if (!data.items || data.items.length === 0) {
+            setResults(["Looks like we cant find the user"])
             setError("Looks like we cant find the user");
         } else {
             setResults(data.items);
         }
 
     } catch (err) {
+        setResults(["Looks like we cant find the user"])
         setError("Looks like we cant find the user");
     } finally {
         setLoading(false);
