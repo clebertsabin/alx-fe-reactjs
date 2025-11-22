@@ -2,33 +2,52 @@ import axios from "axios";
 
 const SEARCH_URL = "https://api.github.com/search/users";
 
-export const fetchAdvancedUsers = async (username, location, minRepos, page = 1) => {
+export const fetchAdvancedUsers = async ({
+    username = "",
+    location = "",
+    minRepos = "",
+    page = 1,
+    perPage = 10
+} = {}) => {
     try {
-        let query = "";
+        if (username && !location && !minRepos) {
+            try {
+                const user = await fetchUserData(username);
+                return { items: [user] }; 
+            } catch (err) {
+                
+            }
+        }
 
-        if (username) query += `${username} in:login`;
-        if (location) query += location ? ` location:${location}` : "";
-        if (minRepos) query += minRepos ? ` repos:>${minRepos}` : "";
+        let queryParts = [];
+        if (username) queryParts.push(`${username} in:login`);
+        if (location) queryParts.push(`location:${location}`);
+        if (minRepos) queryParts.push(`repos:>=${minRepos}`);
+
+        const query = queryParts.join(" ");
 
         if (!query) throw new Error("Please enter at least one search field");
 
         const headers = {};
-
         if (import.meta.env.VITE_APP_GITHUB_API_KEY) {
             headers["Authorization"] = `token ${import.meta.env.VITE_APP_GITHUB_API_KEY}`;
         }
 
-        const response = await axios.get(`${SEARCH_URL}?q=${query}&page=${page}&per_page=10`, {
-            headers,
-        });
+        const response = await axios.get(
+            `${SEARCH_URL}?q=${encodeURIComponent(query)}&page=${page}&per_page=${perPage}`,
+            { headers }
+        );
+
+        if (!response.data.items || response.data.items.length === 0) {
+            throw new Error("Looks like we can't find the user");
+        }
 
         return response.data;
     } catch (error) {
         console.error("GitHub API Error:", error.response?.data || error.message);
-        throw new Error("Search failed");
+        throw new Error("Looks like we can't find the user");
     }
 };
-
 
  export async function fetchUserData(username) {
   try {
