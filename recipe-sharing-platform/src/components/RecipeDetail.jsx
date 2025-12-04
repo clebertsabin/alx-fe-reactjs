@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import data from "../data.json";
 
@@ -7,7 +7,7 @@ export default function RecipeDetail() {
   const [recipe, setRecipe] = useState(null);
 
   useEffect(() => {
-    // Find recipe by ID from data.json
+    // Find recipe by ID
     const found = data.find((r) => r.id === parseInt(id));
     setRecipe(found);
   }, [id]);
@@ -36,7 +36,7 @@ export default function RecipeDetail() {
         <div>
           <h2 className="text-xl font-semibold mb-2">Instructions</h2>
           <ol className="list-decimal list-inside space-y-1">
-            {recipe.steps.map((step, index) => (
+            {recipe.instructions.map((step, index) => (
               <li key={index}>{step}</li>
             ))}
           </ol>
