@@ -3,7 +3,7 @@ import { useState } from "react";
 export default function AddRecipeForm() {
   const [title, setTitle] = useState("");
   const [ingredients, setIngredients] = useState("");
-  const [instructions, setInstructions] = useState("");
+  const [steps, setSteps] = useState(""); // <-- must be named steps
   const [errors, setErrors] = useState({});
 
   // Validation function
@@ -11,7 +11,7 @@ export default function AddRecipeForm() {
     const newErrors = {};
     if (!title.trim()) newErrors.title = "Title is required";
     if (!ingredients.trim()) newErrors.ingredients = "Ingredients are required";
-    if (!instructions.trim()) newErrors.instructions = "Instructions are required";
+    if (!steps.trim()) newErrors.steps = "Steps are required"; // <-- check steps
     return newErrors;
   };
 
@@ -26,7 +26,7 @@ export default function AddRecipeForm() {
       // Clear form
       setTitle("");
       setIngredients("");
-      setInstructions("");
+      setSteps("");
     }
   };
 
@@ -65,17 +65,17 @@ export default function AddRecipeForm() {
           )}
         </div>
 
-        {/* Instructions */}
+        {/* Steps */}
         <div className="mb-4">
-          <label className="block font-semibold mb-1">Instructions</label>
+          <label className="block font-semibold mb-1">Steps</label>
           <textarea
-            value={instructions}
-            onChange={(e) => setInstructions(e.target.value)}
+            value={steps}
+            onChange={(e) => setSteps(e.target.value)}
             rows={4}
             className="w-full border border-gray-300 rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-          {errors.instructions && (
-            <p className="text-red-500 text-sm mt-1">{errors.instructions}</p>
+          {errors.steps && (
+            <p className="text-red-500 text-sm mt-1">{errors.steps}</p>
           )}
         </div>
 
