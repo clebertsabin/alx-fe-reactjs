@@ -4,17 +4,27 @@ function RegistrationForm() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [errors, setErrors] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!username || !email || !password) {
-      setError("All fields are required");
+    if (!username) {
+      setErrors("Username is required");
       return;
     }
 
-    setError("");
+    if (!email) {
+      setErrors("Email is required");
+      return;
+    }
+
+    if (!password) {
+      setErrors("Password is required");
+      return;
+    }
+
+    setErrors("");
     console.log("Registered User:", { username, email, password });
     alert("User registered successfully!");
   };
@@ -23,7 +33,7 @@ function RegistrationForm() {
     <div>
       <h2>Controlled Registration Form</h2>
 
-      {error && <p className="error">{error}</p>}
+      {errors && <p className="error">{errors}</p>}
 
       <form onSubmit={handleSubmit}>
         <input
@@ -37,7 +47,7 @@ function RegistrationForm() {
         <input
           type="email"
           name="email"
-          value={email}        // now EXACT match
+          value={email}
           placeholder="Email"
           onChange={(e) => setEmail(e.target.value)}
         />
@@ -45,7 +55,7 @@ function RegistrationForm() {
         <input
           type="password"
           name="password"
-          value={password}     // now EXACT match
+          value={password}
           placeholder="Password"
           onChange={(e) => setPassword(e.target.value)}
         />
