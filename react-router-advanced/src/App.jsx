@@ -7,6 +7,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import "./App.css";
 import ProfileDetails from "./pages/ProfileDetails";
 import Profile from "./components/Profile";
+import BlogPost from "./pages/BlogPosts";
+
 
 
 function App() {
@@ -29,6 +31,7 @@ function App() {
         </Route>
 
         <Route path="/post/:id" element={<Post />} />
+        <Route path="/blog/:id" element={<BlogPost />} />
       </Routes>
     </BrowserRouter>
   );
