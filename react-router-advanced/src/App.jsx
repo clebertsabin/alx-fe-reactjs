@@ -1,12 +1,12 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
-import Profile from "./pages/Profile";
-import ProfileDetails from "./pages/ProfileDetails";
 import ProfileSettings from "./pages/ProfileSettings";
 import Post from "./pages/Post";
 import ProtectedRoute from "./components/ProtectedRoute";
 import "./App.css";
+import ProfileDetails from "./pages/ProfileDetails";
+import Profile from "./components/Profile";
 
 
 function App() {

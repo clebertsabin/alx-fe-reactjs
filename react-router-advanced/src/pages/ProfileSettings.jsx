@@ -1,3 +1,5 @@
+import React from "react";
+
 function ProfileSettings() {
   return <p>User profile settings go here.</p>;
 }
